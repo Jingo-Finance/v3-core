@@ -1,8 +1,8 @@
 import bn from 'bignumber.js'
 import { BigNumber, BigNumberish, constants, Contract, ContractTransaction, utils, Wallet } from 'ethers'
-import { TestUniswapV3Callee } from '../../typechain/TestUniswapV3Callee'
-import { TestUniswapV3Router } from '../../typechain/TestUniswapV3Router'
-import { MockTimeUniswapV3Pool } from '../../typechain/MockTimeUniswapV3Pool'
+import { TestPegasysV2Callee } from '../../typechain/TestPegasysV2Callee'
+import { TestPegasysV2Router } from '../../typechain/TestPegasysV2Router'
+import { MockTimePegasysV2Pool } from '../../typechain/MockTimePegasysV2Pool'
 import { TestERC20 } from '../../typechain/TestERC20'
 
 export const MaxUint128 = BigNumber.from(2).pow(128).sub(1)
@@ -110,10 +110,10 @@ export function createPoolFunctions({
   token1,
   pool,
 }: {
-  swapTarget: TestUniswapV3Callee
+  swapTarget: TestPegasysV2Callee
   token0: TestERC20
   token1: TestERC20
-  pool: MockTimeUniswapV3Pool
+  pool: MockTimePegasysV2Pool
 }): PoolFunctions {
   async function swapToSqrtPrice(
     inputToken: Contract,
@@ -143,8 +143,8 @@ export function createPoolFunctions({
           ? swapTarget.swapExact0For1
           : swapTarget.swap0ForExact1
         : exactInput
-        ? swapTarget.swapExact1For0
-        : swapTarget.swap1ForExact0
+          ? swapTarget.swapExact1For0
+          : swapTarget.swap1ForExact0
 
     if (typeof sqrtPriceLimitX96 === 'undefined') {
       if (inputToken === token0) {
@@ -233,9 +233,9 @@ export function createMultiPoolFunctions({
   poolOutput,
 }: {
   inputToken: TestERC20
-  swapTarget: TestUniswapV3Router
-  poolInput: MockTimeUniswapV3Pool
-  poolOutput: MockTimeUniswapV3Pool
+  swapTarget: TestPegasysV2Router
+  poolInput: MockTimePegasysV2Pool
+  poolOutput: MockTimePegasysV2Pool
 }): MultiPoolFunctions {
   async function swapForExact0Multi(amountOut: BigNumberish, to: Wallet | string): Promise<ContractTransaction> {
     const method = swapTarget.swapForExact0Multi
