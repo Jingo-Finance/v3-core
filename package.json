@@ -1,6 +1,6 @@
 {
-  "name": "@pollum-io/v2-core",
-  "description": "Core smart contracts of Pegasys V2",
+  "name": "@pollum-io/v3-core",
+  "description": "Core smart contracts of Pegasys V3",
   "license": "gpl-3.0",
   "publishConfig": {
     "access": "public"
@@ -14,13 +14,13 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/pegasys-fi/v2-core"
+    "url": "https://github.com/pegasys-fi/v3-core"
   },
   "files": [
     "contracts/interfaces",
     "contracts/libraries",
-    "artifacts/contracts/PegasysV2Factory.sol/PegasysV2Factory.json",
-    "artifacts/contracts/PegasysV2Pool.sol/PegasysV2Pool.json",
+    "artifacts/contracts/PegasysV3Factory.sol/PegasysV3Factory.json",
+    "artifacts/contracts/PegasysV3Pool.sol/PegasysV3Pool.json",
     "artifacts/contracts/interfaces/**/*.json",
     "!artifacts/contracts/interfaces/**/*.dbg.json"
   ],
