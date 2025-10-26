@@ -1,13 +1,13 @@
 # Pegasys V3
 
-[![Lint](https://github.com/pegasys-fi/v3-core/actions/workflows/lint.yml/badge.svg)](https://github.com/pegasys-fi/v3-core/actions/workflows/lint.yml)
-[![Tests](https://github.com/pegasys-fi/v3-core/actions/workflows/tests.yml/badge.svg)](https://github.com/pegasys-fi/v3-core/actions/workflows/tests.yml)
-[![Fuzz Testing](https://github.com/pegasys-fi/v3-core/actions/workflows/fuzz-testing.yml/badge.svg)](https://github.com/pegasys-fi/v3-core/actions/workflows/fuzz-testing.yml)
-[![Mythx](https://github.com/pegasys-fi/v3-core/actions/workflows/mythx.yml/badge.svg)](https://github.com/pegasys-fi/v3-core/actions/workflows/mythx.yml)
+[![Lint](https://github.com/Jingo-Finance/v3-core/actions/workflows/lint.yml/badge.svg)](https://github.com/Jingo-Finance/v3-core/actions/workflows/lint.yml)
+[![Tests](https://github.com/Jingo-Finance/v3-core/actions/workflows/tests.yml/badge.svg)](https://github.com/Jingo-Finance/v3-core/actions/workflows/tests.yml)
+[![Fuzz Testing](https://github.com/Jingo-Finance/v3-core/actions/workflows/fuzz-testing.yml/badge.svg)](https://github.com/Jingo-Finance/v3-core/actions/workflows/fuzz-testing.yml)
+[![Mythx](https://github.com/Jingo-Finance/v3-core/actions/workflows/mythx.yml/badge.svg)](https://github.com/Jingo-Finance/v3-core/actions/workflows/mythx.yml)
 [![npm version](https://img.shields.io/npm/v/@pollum-io/v3-core/latest.svg)](https://www.npmjs.com/package/@pollum-io/v3-core/v/latest)
 
 This repository contains the core smart contracts for the Pegasys V3 Protocol.
-For higher level contracts, see the [v3-periphery](https://github.com/pegasys-fi/v3-periphery)
+For higher level contracts, see the [v3-periphery](https://github.com/Jingo-Finance/v3-periphery)
 repository.
 
 ## Local deployment
