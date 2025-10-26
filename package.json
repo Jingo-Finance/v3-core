@@ -1,5 +1,5 @@
 {
-  "name": "@pollum-io/v3-core",
+  "name": "@jingofi/v3-core",
   "description": "Core smart contracts of Jingo V3",
   "license": "gpl-3.0",
   "publishConfig": {

@@ -4,7 +4,7 @@
 [![Tests](https://github.com/Jingo-Finance/v3-core/actions/workflows/tests.yml/badge.svg)](https://github.com/Jingo-Finance/v3-core/actions/workflows/tests.yml)
 [![Fuzz Testing](https://github.com/Jingo-Finance/v3-core/actions/workflows/fuzz-testing.yml/badge.svg)](https://github.com/Jingo-Finance/v3-core/actions/workflows/fuzz-testing.yml)
 [![Mythx](https://github.com/Jingo-Finance/v3-core/actions/workflows/mythx.yml/badge.svg)](https://github.com/Jingo-Finance/v3-core/actions/workflows/mythx.yml)
-[![npm version](https://img.shields.io/npm/v/@pollum-io/v3-core/latest.svg)](https://www.npmjs.com/package/@pollum-io/v3-core/v/latest)
+[![npm version](https://img.shields.io/npm/v/@jingofi/v3-core/latest.svg)](https://www.npmjs.com/package/@jingofi/v3-core/v/latest)
 
 This repository contains the core smart contracts for the Jingo V3 Protocol.
 For higher level contracts, see the [v3-periphery](https://github.com/Jingo-Finance/v3-periphery)
@@ -13,16 +13,16 @@ repository.
 ## Local deployment
 
 In order to deploy this code to a local testnet, you should install the npm package
-`@pollum-io/v3-core`
+`@jingofi/v3-core`
 and import the factory bytecode located at
-`@pollum-io/v3-core/artifacts/contracts/JingoV3Factory.sol/JingoV3Factory.json`.
+`@jingofi/v3-core/artifacts/contracts/JingoV3Factory.sol/JingoV3Factory.json`.
 For example:
 
 ```typescript
 import {
   abi as FACTORY_ABI,
   bytecode as FACTORY_BYTECODE,
-} from '@pollum-io/v3-core/artifacts/contracts/JingoV3Factory.sol/JingoV3Factory.json'
+} from '@jingofi/v3-core/artifacts/contracts/JingoV3Factory.sol/JingoV3Factory.json'
 
 // deploy the bytecode
 ```
@@ -34,10 +34,10 @@ your local deployment.
 ## Using solidity interfaces
 
 The Jingo V3 interfaces are available for import into solidity smart contracts
-via the npm artifact `@pollum-io/v3-core`, e.g.:
+via the npm artifact `@jingofi/v3-core`, e.g.:
 
 ```solidity
-import '@pollum-io/v3-core/contracts/interfaces/IJingoV3Pool.sol';
+import '@jingofi/v3-core/contracts/interfaces/IJingoV3Pool.sol';
 
 contract MyContract {
   IJingoV3Pool pool;
