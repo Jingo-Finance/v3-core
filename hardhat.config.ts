@@ -8,8 +8,8 @@ export default {
     hardhat: {
       allowUnlimitedContractSize: false,
     },
-    rollux: {
-      url: `https://bedrock.rollux.com`,
+    plasma: {
+      url: `https://plasmascan.to`,
     },
   },
   etherscan: {

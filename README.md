@@ -50,7 +50,7 @@ contract MyContract {
 ```
 ## Addresses
 
-Jingo V3 is fully deployed on Rollux at the following addresses:
+Jingo V3 is fully deployed on Plasma at the following addresses:
 
 - v3CoreFactoryAddress: [0xeAa20BEA58979386A7d37BAeb4C1522892c74640](https://plasmascan.to/address/0xeAa20BEA58979386A7d37BAeb4C1522892c74640)
 - multicall2Address: [0xc9E6E07CB460F36A6D5826f70647eff7e1823899](https://plasmascan.to/address/0xc9E6E07CB460F36A6D5826f70647eff7e1823899)
