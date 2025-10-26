@@ -1,8 +1,8 @@
 import { Wallet } from 'ethers'
 import { ethers, waffle } from 'hardhat'
 import { TestERC20 } from '../typechain/TestERC20'
-import { PegasysV3Factory } from '../typechain/PegasysV3Factory'
-import { MockTimePegasysV3Pool } from '../typechain/MockTimePegasysV3Pool'
+import { JingoV3Factory } from '../typechain/JingoV3Factory'
+import { MockTimeJingoV3Pool } from '../typechain/MockTimeJingoV3Pool'
 import { expect } from './shared/expect'
 
 import { poolFixture } from './shared/fixtures'
@@ -18,8 +18,8 @@ import {
   getMaxTick,
   expandTo18Decimals,
 } from './shared/utilities'
-import { TestPegasysV3Router } from '../typechain/TestPegasysV3Router'
-import { TestPegasysV3Callee } from '../typechain/TestPegasysV3Callee'
+import { TestJingoV3Router } from '../typechain/TestJingoV3Router'
+import { TestJingoV3Callee } from '../typechain/TestJingoV3Callee'
 
 const feeAmount = FeeAmount.MEDIUM
 const tickSpacing = TICK_SPACINGS[feeAmount]
@@ -28,15 +28,15 @@ const createFixtureLoader = waffle.createFixtureLoader
 
 type ThenArg<T> = T extends PromiseLike<infer U> ? U : T
 
-describe('PegasysV3Pool', () => {
+describe('JingoV3Pool', () => {
   let wallet: Wallet, other: Wallet
 
   let token0: TestERC20
   let token1: TestERC20
   let token2: TestERC20
-  let factory: PegasysV3Factory
-  let pool0: MockTimePegasysV3Pool
-  let pool1: MockTimePegasysV3Pool
+  let factory: JingoV3Factory
+  let pool0: MockTimeJingoV3Pool
+  let pool1: MockTimeJingoV3Pool
 
   let pool0Functions: PoolFunctions
   let pool1Functions: PoolFunctions
@@ -44,8 +44,8 @@ describe('PegasysV3Pool', () => {
   let minTick: number
   let maxTick: number
 
-  let swapTargetCallee: TestPegasysV3Callee
-  let swapTargetRouter: TestPegasysV3Router
+  let swapTargetCallee: TestJingoV3Callee
+  let swapTargetRouter: TestJingoV3Router
 
   let loadFixture: ReturnType<typeof createFixtureLoader>
   let createPool: ThenArg<ReturnType<typeof poolFixture>>['createPool']
@@ -66,7 +66,7 @@ describe('PegasysV3Pool', () => {
       spacing: number,
       firstToken: TestERC20,
       secondToken: TestERC20
-    ): Promise<[MockTimePegasysV3Pool, any]> => {
+    ): Promise<[MockTimeJingoV3Pool, any]> => {
       const pool = await createPool(amount, spacing, firstToken, secondToken)
       const poolFunctions = createPoolFunctions({
         swapTarget: swapTargetCallee,

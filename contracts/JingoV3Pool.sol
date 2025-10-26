@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity =0.7.6;
 
-import './interfaces/IPegasysV3Pool.sol';
+import './interfaces/IJingoV3Pool.sol';
 
 import './NoDelegateCall.sol';
 
@@ -20,14 +20,14 @@ import './libraries/LiquidityMath.sol';
 import './libraries/SqrtPriceMath.sol';
 import './libraries/SwapMath.sol';
 
-import './interfaces/IPegasysV3PoolDeployer.sol';
-import './interfaces/IPegasysV3Factory.sol';
+import './interfaces/IJingoV3PoolDeployer.sol';
+import './interfaces/IJingoV3Factory.sol';
 import './interfaces/IERC20Minimal.sol';
-import './interfaces/callback/IPegasysV3MintCallback.sol';
-import './interfaces/callback/IPegasysV3SwapCallback.sol';
-import './interfaces/callback/IPegasysV3FlashCallback.sol';
+import './interfaces/callback/IJingoV3MintCallback.sol';
+import './interfaces/callback/IJingoV3SwapCallback.sol';
+import './interfaces/callback/IJingoV3FlashCallback.sol';
 
-contract PegasysV3Pool is IPegasysV3Pool, NoDelegateCall {
+contract JingoV3Pool is IJingoV3Pool, NoDelegateCall {
     using LowGasSafeMath for uint256;
     using LowGasSafeMath for int256;
     using SafeCast for uint256;
@@ -38,19 +38,19 @@ contract PegasysV3Pool is IPegasysV3Pool, NoDelegateCall {
     using Position for Position.Info;
     using Oracle for Oracle.Observation[65535];
 
-    /// @inheritdoc IPegasysV3PoolImmutables
+    /// @inheritdoc IJingoV3PoolImmutables
     address public immutable override factory;
-    /// @inheritdoc IPegasysV3PoolImmutables
+    /// @inheritdoc IJingoV3PoolImmutables
     address public immutable override token0;
-    /// @inheritdoc IPegasysV3PoolImmutables
+    /// @inheritdoc IJingoV3PoolImmutables
     address public immutable override token1;
-    /// @inheritdoc IPegasysV3PoolImmutables
+    /// @inheritdoc IJingoV3PoolImmutables
     uint24 public immutable override fee;
 
-    /// @inheritdoc IPegasysV3PoolImmutables
+    /// @inheritdoc IJingoV3PoolImmutables
     int24 public immutable override tickSpacing;
 
-    /// @inheritdoc IPegasysV3PoolImmutables
+    /// @inheritdoc IJingoV3PoolImmutables
     uint128 public immutable override maxLiquidityPerTick;
 
     struct Slot0 {
@@ -70,12 +70,12 @@ contract PegasysV3Pool is IPegasysV3Pool, NoDelegateCall {
         // whether the pool is locked
         bool unlocked;
     }
-    /// @inheritdoc IPegasysV3PoolState
+    /// @inheritdoc IJingoV3PoolState
     Slot0 public override slot0;
 
-    /// @inheritdoc IPegasysV3PoolState
+    /// @inheritdoc IJingoV3PoolState
     uint256 public override feeGrowthGlobal0X128;
-    /// @inheritdoc IPegasysV3PoolState
+    /// @inheritdoc IJingoV3PoolState
     uint256 public override feeGrowthGlobal1X128;
 
     // accumulated protocol fees in token0/token1 units
@@ -83,19 +83,19 @@ contract PegasysV3Pool is IPegasysV3Pool, NoDelegateCall {
         uint128 token0;
         uint128 token1;
     }
-    /// @inheritdoc IPegasysV3PoolState
+    /// @inheritdoc IJingoV3PoolState
     ProtocolFees public override protocolFees;
 
-    /// @inheritdoc IPegasysV3PoolState
+    /// @inheritdoc IJingoV3PoolState
     uint128 public override liquidity;
 
-    /// @inheritdoc IPegasysV3PoolState
+    /// @inheritdoc IJingoV3PoolState
     mapping(int24 => Tick.Info) public override ticks;
-    /// @inheritdoc IPegasysV3PoolState
+    /// @inheritdoc IJingoV3PoolState
     mapping(int16 => uint256) public override tickBitmap;
-    /// @inheritdoc IPegasysV3PoolState
+    /// @inheritdoc IJingoV3PoolState
     mapping(bytes32 => Position.Info) public override positions;
-    /// @inheritdoc IPegasysV3PoolState
+    /// @inheritdoc IJingoV3PoolState
     Oracle.Observation[65535] public override observations;
 
     /// @dev Mutually exclusive reentrancy protection into the pool to/from a method. This method also prevents entrance
@@ -108,15 +108,15 @@ contract PegasysV3Pool is IPegasysV3Pool, NoDelegateCall {
         slot0.unlocked = true;
     }
 
-    /// @dev Prevents calling a function from anyone except the address returned by IPegasysV3Factory#owner()
+    /// @dev Prevents calling a function from anyone except the address returned by IJingoV3Factory#owner()
     modifier onlyFactoryOwner() {
-        require(msg.sender == IPegasysV3Factory(factory).owner());
+        require(msg.sender == IJingoV3Factory(factory).owner());
         _;
     }
 
     constructor() {
         int24 _tickSpacing;
-        (factory, token0, token1, fee, _tickSpacing) = IPegasysV3PoolDeployer(msg.sender).parameters();
+        (factory, token0, token1, fee, _tickSpacing) = IJingoV3PoolDeployer(msg.sender).parameters();
         tickSpacing = _tickSpacing;
 
         maxLiquidityPerTick = Tick.tickSpacingToMaxLiquidityPerTick(_tickSpacing);
@@ -156,7 +156,7 @@ contract PegasysV3Pool is IPegasysV3Pool, NoDelegateCall {
         return abi.decode(data, (uint256));
     }
 
-    /// @inheritdoc IPegasysV3PoolDerivedState
+    /// @inheritdoc IJingoV3PoolDerivedState
     function snapshotCumulativesInside(
         int24 tickLower,
         int24 tickUpper
@@ -232,7 +232,7 @@ contract PegasysV3Pool is IPegasysV3Pool, NoDelegateCall {
         }
     }
 
-    /// @inheritdoc IPegasysV3PoolDerivedState
+    /// @inheritdoc IJingoV3PoolDerivedState
     function observe(
         uint32[] calldata secondsAgos
     )
@@ -253,7 +253,7 @@ contract PegasysV3Pool is IPegasysV3Pool, NoDelegateCall {
             );
     }
 
-    /// @inheritdoc IPegasysV3PoolActions
+    /// @inheritdoc IJingoV3PoolActions
     function increaseObservationCardinalityNext(
         uint16 observationCardinalityNext
     ) external override lock noDelegateCall {
@@ -267,7 +267,7 @@ contract PegasysV3Pool is IPegasysV3Pool, NoDelegateCall {
             emit IncreaseObservationCardinalityNext(observationCardinalityNextOld, observationCardinalityNextNew);
     }
 
-    /// @inheritdoc IPegasysV3PoolActions
+    /// @inheritdoc IJingoV3PoolActions
     /// @dev not locked because it initializes unlocked
     function initialize(uint160 sqrtPriceX96) external override {
         require(slot0.sqrtPriceX96 == 0, 'AI');
@@ -451,7 +451,7 @@ contract PegasysV3Pool is IPegasysV3Pool, NoDelegateCall {
         }
     }
 
-    /// @inheritdoc IPegasysV3PoolActions
+    /// @inheritdoc IJingoV3PoolActions
     /// @dev noDelegateCall is applied indirectly via _modifyPosition
     function mint(
         address recipient,
@@ -477,14 +477,14 @@ contract PegasysV3Pool is IPegasysV3Pool, NoDelegateCall {
         uint256 balance1Before;
         if (amount0 > 0) balance0Before = balance0();
         if (amount1 > 0) balance1Before = balance1();
-        IPegasysV3MintCallback(msg.sender).pegasysV3MintCallback(amount0, amount1, data);
+        IJingoV3MintCallback(msg.sender).jingoV3MintCallback(amount0, amount1, data);
         if (amount0 > 0) require(balance0Before.add(amount0) <= balance0(), 'M0');
         if (amount1 > 0) require(balance1Before.add(amount1) <= balance1(), 'M1');
 
         emit Mint(msg.sender, recipient, tickLower, tickUpper, amount, amount0, amount1);
     }
 
-    /// @inheritdoc IPegasysV3PoolActions
+    /// @inheritdoc IJingoV3PoolActions
     function collect(
         address recipient,
         int24 tickLower,
@@ -510,7 +510,7 @@ contract PegasysV3Pool is IPegasysV3Pool, NoDelegateCall {
         emit Collect(msg.sender, recipient, tickLower, tickUpper, amount0, amount1);
     }
 
-    /// @inheritdoc IPegasysV3PoolActions
+    /// @inheritdoc IJingoV3PoolActions
     /// @dev noDelegateCall is applied indirectly via _modifyPosition
     function burn(
         int24 tickLower,
@@ -589,7 +589,7 @@ contract PegasysV3Pool is IPegasysV3Pool, NoDelegateCall {
         uint256 feeAmount;
     }
 
-    /// @inheritdoc IPegasysV3PoolActions
+    /// @inheritdoc IJingoV3PoolActions
     function swap(
         address recipient,
         bool zeroForOne,
@@ -766,13 +766,13 @@ contract PegasysV3Pool is IPegasysV3Pool, NoDelegateCall {
             if (amount1 < 0) TransferHelper.safeTransfer(token1, recipient, uint256(-amount1));
 
             uint256 balance0Before = balance0();
-            IPegasysV3SwapCallback(msg.sender).pegasysV3SwapCallback(amount0, amount1, data);
+            IJingoV3SwapCallback(msg.sender).jingoV3SwapCallback(amount0, amount1, data);
             require(balance0Before.add(uint256(amount0)) <= balance0(), 'IIA');
         } else {
             if (amount0 < 0) TransferHelper.safeTransfer(token0, recipient, uint256(-amount0));
 
             uint256 balance1Before = balance1();
-            IPegasysV3SwapCallback(msg.sender).pegasysV3SwapCallback(amount0, amount1, data);
+            IJingoV3SwapCallback(msg.sender).jingoV3SwapCallback(amount0, amount1, data);
             require(balance1Before.add(uint256(amount1)) <= balance1(), 'IIA');
         }
 
@@ -780,7 +780,7 @@ contract PegasysV3Pool is IPegasysV3Pool, NoDelegateCall {
         slot0.unlocked = true;
     }
 
-    /// @inheritdoc IPegasysV3PoolActions
+    /// @inheritdoc IJingoV3PoolActions
     function flash(
         address recipient,
         uint256 amount0,
@@ -798,7 +798,7 @@ contract PegasysV3Pool is IPegasysV3Pool, NoDelegateCall {
         if (amount0 > 0) TransferHelper.safeTransfer(token0, recipient, amount0);
         if (amount1 > 0) TransferHelper.safeTransfer(token1, recipient, amount1);
 
-        IPegasysV3FlashCallback(msg.sender).pegasysV3FlashCallback(fee0, fee1, data);
+        IJingoV3FlashCallback(msg.sender).jingoV3FlashCallback(fee0, fee1, data);
 
         uint256 balance0After = balance0();
         uint256 balance1After = balance1();
@@ -826,7 +826,7 @@ contract PegasysV3Pool is IPegasysV3Pool, NoDelegateCall {
         emit Flash(msg.sender, recipient, amount0, amount1, paid0, paid1);
     }
 
-    /// @inheritdoc IPegasysV3PoolOwnerActions
+    /// @inheritdoc IJingoV3PoolOwnerActions
     function setFeeProtocol(uint8 feeProtocol0, uint8 feeProtocol1) external override lock onlyFactoryOwner {
         require(
             (feeProtocol0 == 0 || (feeProtocol0 >= 4 && feeProtocol0 <= 10)) &&
@@ -837,7 +837,7 @@ contract PegasysV3Pool is IPegasysV3Pool, NoDelegateCall {
         emit SetFeeProtocol(feeProtocolOld % 16, feeProtocolOld >> 4, feeProtocol0, feeProtocol1);
     }
 
-    /// @inheritdoc IPegasysV3PoolOwnerActions
+    /// @inheritdoc IJingoV3PoolOwnerActions
     function collectProtocol(
         address recipient,
         uint128 amount0Requested,

@@ -1,4 +1,4 @@
-# Pegasys V3
+# Jingo V3
 
 [![Lint](https://github.com/Jingo-Finance/v3-core/actions/workflows/lint.yml/badge.svg)](https://github.com/Jingo-Finance/v3-core/actions/workflows/lint.yml)
 [![Tests](https://github.com/Jingo-Finance/v3-core/actions/workflows/tests.yml/badge.svg)](https://github.com/Jingo-Finance/v3-core/actions/workflows/tests.yml)
@@ -6,7 +6,7 @@
 [![Mythx](https://github.com/Jingo-Finance/v3-core/actions/workflows/mythx.yml/badge.svg)](https://github.com/Jingo-Finance/v3-core/actions/workflows/mythx.yml)
 [![npm version](https://img.shields.io/npm/v/@pollum-io/v3-core/latest.svg)](https://www.npmjs.com/package/@pollum-io/v3-core/v/latest)
 
-This repository contains the core smart contracts for the Pegasys V3 Protocol.
+This repository contains the core smart contracts for the Jingo V3 Protocol.
 For higher level contracts, see the [v3-periphery](https://github.com/Jingo-Finance/v3-periphery)
 repository.
 
@@ -15,32 +15,32 @@ repository.
 In order to deploy this code to a local testnet, you should install the npm package
 `@pollum-io/v3-core`
 and import the factory bytecode located at
-`@pollum-io/v3-core/artifacts/contracts/PegasysV3Factory.sol/PegasysV3Factory.json`.
+`@pollum-io/v3-core/artifacts/contracts/JingoV3Factory.sol/JingoV3Factory.json`.
 For example:
 
 ```typescript
 import {
   abi as FACTORY_ABI,
   bytecode as FACTORY_BYTECODE,
-} from '@pollum-io/v3-core/artifacts/contracts/PegasysV3Factory.sol/PegasysV3Factory.json'
+} from '@pollum-io/v3-core/artifacts/contracts/JingoV3Factory.sol/JingoV3Factory.json'
 
 // deploy the bytecode
 ```
 
 This will ensure that you are testing against the same bytecode that is deployed to
-mainnet and public testnets, and all Pegasys code will correctly interoperate with
+mainnet and public testnets, and all Jingo code will correctly interoperate with
 your local deployment.
 
 ## Using solidity interfaces
 
-The Pegasys V3 interfaces are available for import into solidity smart contracts
+The Jingo V3 interfaces are available for import into solidity smart contracts
 via the npm artifact `@pollum-io/v3-core`, e.g.:
 
 ```solidity
-import '@pollum-io/v3-core/contracts/interfaces/IPegasysV3Pool.sol';
+import '@pollum-io/v3-core/contracts/interfaces/IJingoV3Pool.sol';
 
 contract MyContract {
-  IPegasysV3Pool pool;
+  IJingoV3Pool pool;
 
   function doSomethingWithPool() {
     // pool.swap(...);
@@ -50,7 +50,7 @@ contract MyContract {
 ```
 ## Addresses
 
-Pegasys V3 is fully deployed on Rollux at the following addresses:
+Jingo V3 is fully deployed on Rollux at the following addresses:
 
 - v3CoreFactoryAddress: [0xeAa20BEA58979386A7d37BAeb4C1522892c74640](https://explorer.rollux.com/address/0xeAa20BEA58979386A7d37BAeb4C1522892c74640)
 - multicall2Address: [0xc9E6E07CB460F36A6D5826f70647eff7e1823899](https://explorer.rollux.com/address/0xc9E6E07CB460F36A6D5826f70647eff7e1823899)

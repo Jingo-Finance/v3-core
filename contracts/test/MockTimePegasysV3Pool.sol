@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity =0.7.6;
 
-import '../PegasysV3Pool.sol';
+import '../JingoV3Pool.sol';
 
 // used for testing time dependent behavior
-contract MockTimePegasysV3Pool is PegasysV3Pool {
+contract MockTimeJingoV3Pool is JingoV3Pool {
     // Monday, October 5, 2020 9:00:00 AM GMT-05:00
     uint256 public time = 1601906400;
 

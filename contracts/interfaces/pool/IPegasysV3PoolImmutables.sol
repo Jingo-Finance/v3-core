@@ -3,8 +3,8 @@ pragma solidity >=0.5.0;
 
 /// @title Pool state that never changes
 /// @notice These parameters are fixed for a pool forever, i.e., the methods will always return the same values
-interface IPegasysV3PoolImmutables {
-    /// @notice The contract that deployed the pool, which must adhere to the IPegasysV3Factory interface
+interface IJingoV3PoolImmutables {
+    /// @notice The contract that deployed the pool, which must adhere to the IJingoV3Factory interface
     /// @return The contract address
     function factory() external view returns (address);
 

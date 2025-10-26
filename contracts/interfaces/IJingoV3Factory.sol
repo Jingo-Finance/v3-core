@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 pragma solidity >=0.5.0;
 
-/// @title The interface for the Pegasys V3 Factory
-/// @notice The Pegasys V3 Factory facilitates creation of Pegasys V3 pools and control over the protocol fees
-interface IPegasysV3Factory {
+/// @title The interface for the Jingo V3 Factory
+/// @notice The Jingo V3 Factory facilitates creation of Jingo V3 pools and control over the protocol fees
+interface IJingoV3Factory {
     /// @notice Emitted when the owner of the factory is changed
     /// @param oldOwner The owner before the owner was changed
     /// @param newOwner The owner after the owner was changed

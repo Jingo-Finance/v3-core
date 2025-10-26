@@ -1,22 +1,22 @@
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity =0.7.6;
 
-import './interfaces/IPegasysV3Factory.sol';
+import './interfaces/IJingoV3Factory.sol';
 
-import './PegasysV3PoolDeployer.sol';
+import './JingoV3PoolDeployer.sol';
 import './NoDelegateCall.sol';
 
-import './PegasysV3Pool.sol';
+import './JingoV3Pool.sol';
 
-/// @title Canonical Pegasys V3 factory
-/// @notice Deploys Pegasys V3 pools and manages ownership and control over pool protocol fees
-contract PegasysV3Factory is IPegasysV3Factory, PegasysV3PoolDeployer, NoDelegateCall {
-    /// @inheritdoc IPegasysV3Factory
+/// @title Canonical Jingo V3 factory
+/// @notice Deploys Jingo V3 pools and manages ownership and control over pool protocol fees
+contract JingoV3Factory is IJingoV3Factory, JingoV3PoolDeployer, NoDelegateCall {
+    /// @inheritdoc IJingoV3Factory
     address public override owner;
 
-    /// @inheritdoc IPegasysV3Factory
+    /// @inheritdoc IJingoV3Factory
     mapping(uint24 => int24) public override feeAmountTickSpacing;
-    /// @inheritdoc IPegasysV3Factory
+    /// @inheritdoc IJingoV3Factory
     mapping(address => mapping(address => mapping(uint24 => address))) public override getPool;
 
     constructor() {
@@ -31,7 +31,7 @@ contract PegasysV3Factory is IPegasysV3Factory, PegasysV3PoolDeployer, NoDelegat
         emit FeeAmountEnabled(10000, 200);
     }
 
-    /// @inheritdoc IPegasysV3Factory
+    /// @inheritdoc IJingoV3Factory
     function createPool(
         address tokenA,
         address tokenB,
@@ -50,14 +50,14 @@ contract PegasysV3Factory is IPegasysV3Factory, PegasysV3PoolDeployer, NoDelegat
         emit PoolCreated(token0, token1, fee, tickSpacing, pool);
     }
 
-    /// @inheritdoc IPegasysV3Factory
+    /// @inheritdoc IJingoV3Factory
     function setOwner(address _owner) external override {
         require(msg.sender == owner);
         emit OwnerChanged(owner, _owner);
         owner = _owner;
     }
 
-    /// @inheritdoc IPegasysV3Factory
+    /// @inheritdoc IJingoV3Factory
     function enableFeeAmount(uint24 fee, int24 tickSpacing) public override {
         require(msg.sender == owner);
         require(fee < 1000000);

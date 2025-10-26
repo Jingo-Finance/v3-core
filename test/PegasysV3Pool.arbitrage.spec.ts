@@ -1,9 +1,9 @@
 import Decimal from 'decimal.js'
 import { BigNumber, BigNumberish, Wallet } from 'ethers'
 import { ethers, waffle } from 'hardhat'
-import { MockTimePegasysV3Pool } from '../typechain/MockTimePegasysV3Pool'
+import { MockTimeJingoV3Pool } from '../typechain/MockTimeJingoV3Pool'
 import { TickMathTest } from '../typechain/TickMathTest'
-import { PegasysV3PoolSwapTest } from '../typechain/PegasysV3PoolSwapTest'
+import { JingoV3PoolSwapTest } from '../typechain/JingoV3PoolSwapTest'
 import { expect } from './shared/expect'
 
 import { poolFixture } from './shared/fixtures'
@@ -48,7 +48,7 @@ function applySqrtRatioBipsHundredthsDelta(sqrtRatio: BigNumber, bipsHundredths:
   )
 }
 
-describe('PegasysV3Pool arbitrage tests', () => {
+describe('JingoV3Pool arbitrage tests', () => {
   let wallet: Wallet, arbitrageur: Wallet
 
   let loadFixture: ReturnType<typeof createFixtureLoader>
@@ -95,8 +95,8 @@ describe('PegasysV3Pool arbitrage tests', () => {
               pool,
             })
 
-            const testerFactory = await ethers.getContractFactory('PegasysV3PoolSwapTest')
-            const tester = (await testerFactory.deploy()) as PegasysV3PoolSwapTest
+            const testerFactory = await ethers.getContractFactory('JingoV3PoolSwapTest')
+            const tester = (await testerFactory.deploy()) as JingoV3PoolSwapTest
 
             const tickMathFactory = await ethers.getContractFactory('TickMathTest')
             const tickMath = (await tickMathFactory.deploy()) as TickMathTest
@@ -118,9 +118,9 @@ describe('PegasysV3Pool arbitrage tests', () => {
           let swapToHigherPrice: SwapFunction
           let swapToLowerPrice: SwapFunction
           let swapExact1For0: SwapFunction
-          let pool: MockTimePegasysV3Pool
+          let pool: MockTimeJingoV3Pool
           let mint: MintFunction
-          let tester: PegasysV3PoolSwapTest
+          let tester: JingoV3PoolSwapTest
           let tickMath: TickMathTest
 
           beforeEach('load the fixture', async () => {

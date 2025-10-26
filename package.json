@@ -1,6 +1,6 @@
 {
   "name": "@pollum-io/v3-core",
-  "description": "Core smart contracts of Pegasys V3",
+  "description": "Core smart contracts of Jingo V3",
   "license": "gpl-3.0",
   "publishConfig": {
     "access": "public"
@@ -8,7 +8,7 @@
   "version": "0.0.1",
   "homepage": "https://jingo.finance",
   "keywords": [
-    "pegasys",
+    "jingo",
     "core",
     "v3"
   ],
@@ -19,8 +19,8 @@
   "files": [
     "contracts/interfaces",
     "contracts/libraries",
-    "artifacts/contracts/PegasysV3Factory.sol/PegasysV3Factory.json",
-    "artifacts/contracts/PegasysV3Pool.sol/PegasysV3Pool.json",
+    "artifacts/contracts/JingoV3Factory.sol/JingoV3Factory.json",
+    "artifacts/contracts/JingoV3Pool.sol/JingoV3Pool.json",
     "artifacts/contracts/interfaces/**/*.json",
     "!artifacts/contracts/interfaces/**/*.dbg.json"
   ],

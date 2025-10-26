@@ -3,10 +3,10 @@ pragma solidity =0.7.6;
 
 import '../interfaces/IERC20Minimal.sol';
 
-import '../interfaces/callback/IPegasysV3SwapCallback.sol';
-import '../interfaces/IPegasysV3Pool.sol';
+import '../interfaces/callback/IJingoV3SwapCallback.sol';
+import '../interfaces/IJingoV3Pool.sol';
 
-contract TestPegasysV3SwapPay is IPegasysV3SwapCallback {
+contract TestJingoV3SwapPay is IJingoV3SwapCallback {
     function swap(
         address pool,
         address recipient,
@@ -16,7 +16,7 @@ contract TestPegasysV3SwapPay is IPegasysV3SwapCallback {
         uint256 pay0,
         uint256 pay1
     ) external {
-        IPegasysV3Pool(pool).swap(
+        IJingoV3Pool(pool).swap(
             recipient,
             zeroForOne,
             amountSpecified,
@@ -25,13 +25,13 @@ contract TestPegasysV3SwapPay is IPegasysV3SwapCallback {
         );
     }
 
-    function pegasysV3SwapCallback(int256, int256, bytes calldata data) external override {
+    function jingoV3SwapCallback(int256, int256, bytes calldata data) external override {
         (address sender, uint256 pay0, uint256 pay1) = abi.decode(data, (address, uint256, uint256));
 
         if (pay0 > 0) {
-            IERC20Minimal(IPegasysV3Pool(msg.sender).token0()).transferFrom(sender, msg.sender, uint256(pay0));
+            IERC20Minimal(IJingoV3Pool(msg.sender).token0()).transferFrom(sender, msg.sender, uint256(pay0));
         } else if (pay1 > 0) {
-            IERC20Minimal(IPegasysV3Pool(msg.sender).token1()).transferFrom(sender, msg.sender, uint256(pay1));
+            IERC20Minimal(IJingoV3Pool(msg.sender).token1()).transferFrom(sender, msg.sender, uint256(pay1));
         }
     }
 }
